@@ -1,5 +1,11 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+defineProps<{
+  title: string;
+  body: string;
+}>();
+</script>
 
 <template>
-  <div>text</div>
+  <div>{{ title }}</div>
+  <div>{{ body }}</div>
 </template>
