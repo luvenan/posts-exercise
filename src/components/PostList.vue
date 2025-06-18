@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Post from "./Post.vue";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 
 type Post = {
   id: number;
@@ -10,13 +10,15 @@ type Post = {
 
 const posts = ref<Post[]>([]);
 
-async function getPosts() {
-  const res = await fetch("https://dummyjson.com/posts");
+const getPosts = async (limit: number = 20) => {
+  const res = await fetch("https://dummyjson.com/posts?limit=" + limit);
   const data = await res.json();
   posts.value = data.posts;
-}
+};
 
-await getPosts();
+onMounted(async () => {
+  await getPosts();
+});
 </script>
 
 <template>
