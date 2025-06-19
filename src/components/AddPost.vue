@@ -35,13 +35,13 @@ const handleSubmit = () => {
       <input
         v-model="title"
         type="text"
-        placeholder="Post title"
+        placeholder="Title"
         class="w-full border border-gray-400 rounded-md px-2 font-bold text-gray-800"
       />
       <textarea
         rows="3"
         v-model="body"
-        placeholder="Post content"
+        placeholder="Write your post here..."
         class="w-full border border-gray-400 rounded-md px-2 text-sm text-gray-700"
       ></textarea>
       <div class="flex justify-end">
