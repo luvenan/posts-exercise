@@ -77,12 +77,16 @@ const showNewPost = (payload: { title: string; body: string }) => {
 </script>
 
 <template>
-  <div class="w-[400px] flex justify-between mb-2 items-baseline">
-    <div class="font-bold text-xl">Posts</div>
-    <div @click="showAddPost = true" class="text-[#3679FF] text-sm cursor-pointer">Add post</div>
-  </div>
-  <div class="flex flex-col gap-3">
-    <AddPost @newpost="showNewPost" @close="showAddPost = false" v-if="showAddPost" />
-    <Post v-for="post in posts" :key="post.id" :post="post" />
+  <div class="w-full flex flex-col items-center justify-center py-8 sm:py-20 px-4">
+    <div class="max-w-[400px]">
+      <div class="w-full flex justify-between mb-2 items-baseline">
+        <div class="font-bold text-xl">Posts</div>
+        <div @click="showAddPost = true" class="text-[#3679FF] text-sm cursor-pointer">Add post</div>
+      </div>
+      <div class="flex flex-col gap-3">
+        <AddPost @newpost="showNewPost" @close="showAddPost = false" v-if="showAddPost" />
+        <Post v-for="post in posts" :key="post.id" :post="post" />
+      </div>
+    </div>
   </div>
 </template>

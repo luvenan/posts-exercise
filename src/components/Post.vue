@@ -38,7 +38,7 @@ const updatePost = (postId: number) => {
   isEditing.value = false;
 };
 const postClasses =
-  "bg-white border border-[#E3E8EB] rounded-2xl px-4 py-2 w-[400px] shadow-[0px_1px_9px_2px_rgba(193,194,198,0.15)] text-left flex flex-col gap-3";
+  "bg-white border border-[#E3E8EB] rounded-2xl px-4 py-3 shadow-[0px_1px_9px_2px_rgba(193,194,198,0.15)] text-left flex flex-col gap-3";
 
 const isEditing = ref(false);
 </script>
