@@ -31,11 +31,12 @@
 </script>
 
 <template>
-  <div v-if="!isEditing">
-    <div>{{ editableTitle }}
-      <span @click="isEditing = true">edit</span>
+  <div v-if="!isEditing" class="bg-white border border-[#E3E8EB] rounded-2xl px-4 py-2 w-[400px] shadow-[0px_1px_9px_2px_rgba(193,194,198,0.15)] text-left">
+    <div class="flex justify-between items-center">
+      <div class="font-bold">{{ editableTitle }}</div>
+      <div @click="isEditing = true"><img src="../assets/edit.svg" alt="Edit icon" /></div>
     </div>
-    <div >{{ editableBody }}</div>
+    <div>{{ editableBody }}</div>
   </div>
   <div v-else>
     <input v-model="editableTitle" type="text" />

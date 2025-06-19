@@ -68,13 +68,16 @@
 </script>
 
 <template>
-  <div>Posts</div>
-  <button @click="showAddPost = true">Add post</button>
-  <AddPost @newpost="showNewPost"
-  v-if="showAddPost" />
+  <div class="flex justify-between">
+    <div>Posts</div>
+    <div @click="showAddPost=true" class="cursor-pointer">Add post</div>
+    <AddPost @newpost="showNewPost" v-if="showAddPost" />
+  </div>
+  <div class="flex flex-col gap-2" >
   <Post
     v-for="post in posts"
     :key="post.id"
     :post="post"
   />
+  </div>
 </template>
