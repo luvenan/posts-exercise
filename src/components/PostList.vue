@@ -108,8 +108,8 @@ const showNewPost = (payload: { title: string; body: string }) => {
 </script>
 
 <template>
-  <div class="w-full flex flex-col items-center justify-center py-8 sm:py-20 px-4">
-    <div class="max-w-[400px]">
+  <div class="w-full flex flex-col items-center justify-center py-12 px-4">
+    <div class="w-full min-[420px]:w-[400px]">
       <div class="w-full flex justify-between mb-2 items-baseline">
         <div class="font-bold text-xl">Posts</div>
         <div @click="showAddPost = true" class="text-[#3679FF] text-sm cursor-pointer">Add post</div>
