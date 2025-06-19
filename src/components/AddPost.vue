@@ -7,7 +7,7 @@ const body = ref("");
 // If more time:
 // - Add form validation for title and body
 // - Add loading state while submitting
-// - Handle errors from the API
+// - Show api error messages to the user
 
 // Emit event to parent (optional)
 const emit = defineEmits<{

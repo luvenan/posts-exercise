@@ -18,7 +18,7 @@ type Post = {
 
 // If more time:
 // - Add loading spinner for fetching / searching posts
-// - Add error handling for API requests
+// - Show api error messages to the user
 
 const posts = ref<Post[]>([]);
 const showAddPost = ref(false);

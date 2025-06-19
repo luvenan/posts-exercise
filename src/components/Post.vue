@@ -5,7 +5,7 @@ import { ref } from "vue";
 // - Add form validation for title and body
 // - Consolidate the editing section with the addPost component
 // - Add loading state while submitting
-// - Handle errors from the API
+// - Show api error messages to the user
 // - Allow user to like or dislike posts
 
 type Post = {
