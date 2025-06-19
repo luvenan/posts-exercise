@@ -5,8 +5,8 @@ const title = ref("");
 const body = ref("");
 
 // If more time:
-// - Add form validation for title and body
-// - Add loading state while submitting
+// - Add form validation for title and body (maybe zod?)
+// - Add loading spinner while submitting
 // - Show api error messages to the user
 
 // Emit event to parent (optional)
