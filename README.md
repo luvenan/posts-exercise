@@ -50,7 +50,7 @@ Additional information:
 
 ## Notes
 
-I ran out of time and would have liked to implement:
+Future implementation would include:
 
 - Form validation
 - Error messages visible to the user
