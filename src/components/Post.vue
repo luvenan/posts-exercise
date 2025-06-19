@@ -26,16 +26,23 @@ const props = defineProps<{
 
 const editableTitle = ref(props.post.title);
 const editableBody = ref(props.post.body);
-const updatePost = (postId: number) => {
-  fetch(`https://dummyjson.com/posts/${postId}`, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      title: editableBody.value,
-      body: editableBody.value,
-    }),
-  });
-  isEditing.value = false;
+const updatePost = async (postId: number) => {
+  try {
+    const res = await fetch(`https://dummyjson.com/posts/${postId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        title: editableTitle.value,
+        body: editableBody.value,
+      }),
+    });
+    if (!res.ok) {
+      throw new Error(`Failed to update post with id ${postId}`);
+    }
+    isEditing.value = false;
+  } catch (err) {
+    console.error(err);
+  }
 };
 const postClasses =
   "bg-white border border-[#E3E8EB] rounded-2xl px-4 py-3 shadow-[0px_1px_9px_2px_rgba(193,194,198,0.15)] text-left flex flex-col gap-3";
@@ -78,7 +85,15 @@ const isEditing = ref(false);
       class="border border-gray-400 text-gray-700 rounded-md px-2 text-sm"
     ></textarea>
     <div class="flex justify-end">
-      <img @click="isEditing = false" src="../assets/clear.svg" class="cursor-pointer" />
+      <img
+        @click="
+          isEditing = false;
+          editableTitle = post.title;
+          editableBody = post.body;
+        "
+        src="../assets/clear.svg"
+        class="cursor-pointer"
+      />
       <img @click="updatePost(post.id)" src="../assets/check.svg" class="cursor-pointer" />
     </div>
   </div>

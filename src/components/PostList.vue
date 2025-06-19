@@ -18,7 +18,7 @@ type Post = {
 
 // If more time:
 // - Add loading spinner for fetching / searching posts
-// - Add erorr handling for API requests
+// - Add error handling for API requests
 
 const posts = ref<Post[]>([]);
 const showAddPost = ref(false);
@@ -29,16 +29,24 @@ const searchQuery = ref("");
 const isSearching = ref(false);
 
 const getPosts = async (limit = 20, skip = 0, search = "") => {
-  let url = `https://dummyjson.com/posts`;
-  if (search.trim()) {
-    url += `/search?q=${encodeURIComponent(search.trim())}`;
-    console.log("Searching for:", search.trim(), url);
-  } else {
-    url += `?limit=${limit}&skip=${skip}`;
+  try {
+    let url = `https://dummyjson.com/posts`;
+    if (search.trim()) {
+      url += `/search?q=${encodeURIComponent(search.trim())}`;
+      console.log("Searching for:", search.trim(), url);
+    } else {
+      url += `?limit=${limit}&skip=${skip}`;
+    }
+    const res = await fetch(url);
+    if (!res.ok) {
+      throw new Error(`Failed to fetch posts: ${res.status} ${res.statusText}`);
+    }
+    const data = await res.json();
+    return data.posts || [];
+  } catch (err) {
+    console.error("Error fetching posts:", err);
+    return [];
   }
-  const res = await fetch(url);
-  const data = await res.json();
-  return data.posts;
 };
 
 const loadMorePosts = async () => {

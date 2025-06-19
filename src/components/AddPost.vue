@@ -15,23 +15,28 @@ const emit = defineEmits<{
   (e: "close", payload: void): void;
 }>();
 
-const handleSubmit = () => {
+const handleSubmit = async () => {
   if (!title.value || !body.value) return;
-  fetch("https://dummyjson.com/posts/add", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      title: title.value,
-      body: body.value,
-      userId: 1, // Assuming a static userId for simplicity
-      reactions: { likes: 0, dislikes: 0 },
-      views: 0,
-      tags: [],
-    }),
-  });
-  emit("newpost", { title: title.value, body: body.value });
-  title.value = "";
-  body.value = "";
+  try {
+    const res = await fetch("https://dummyjson.com/posts/add", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        title: title.value,
+        body: body.value,
+        userId: 1, // for simplicity
+        reactions: { likes: 0, dislikes: 0 },
+        views: 0,
+        tags: [],
+      }),
+    });
+    if (!res.ok) throw new Error("Failed to add post");
+    emit("newpost", { title: title.value, body: body.value });
+    title.value = "";
+    body.value = "";
+  } catch (err) {
+    console.error(err);
+  }
 };
 </script>
 
