@@ -38,7 +38,7 @@ const updatePost = (postId: number) => {
   isEditing.value = false;
 };
 const postClasses =
-  "bg-white border border-[#E3E8EB] rounded-2xl px-4 py-2 w-[400px] shadow-[0px_1px_9px_2px_rgba(193,194,198,0.15)] text-left flex flex-col gap-2";
+  "bg-white border border-[#E3E8EB] rounded-2xl px-4 py-2 w-[400px] shadow-[0px_1px_9px_2px_rgba(193,194,198,0.15)] text-left flex flex-col gap-3";
 
 const isEditing = ref(false);
 </script>
@@ -50,7 +50,12 @@ const isEditing = ref(false);
       <img src="../assets/edit.svg" @click="isEditing = true" class="shrink-0 cursor-pointer mt-1.5 ml-2" />
     </div>
     <div class="text-[#83888F] text-sm line-clamp-3">{{ editableBody }}</div>
-    <div class="flex justify-between">
+    <div class="flex justify-start gap-2">
+      <span v-for="(tag, index) in post.tags" :key="index" class="text-blue-900 text-xs bg-blue-100 rounded-lg px-2">
+        #{{ tag }}<span v-if="index < post.tags.length - 1"> </span>
+      </span>
+    </div>
+    <div class="flex justify-between mt-1">
       <div class="flex">
         <img src="../assets/thumb_up.svg" />
         <span class="text-[#83888F] text-xs ml-1">{{ post.reactions.likes }}</span>
