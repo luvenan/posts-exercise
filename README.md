@@ -1,9 +1,9 @@
-### Luisa's posts exercise
+# Luisa's posts exercise
 
 Hi!
 This is my implementation of the posts exercise
 
-## To run the project
+### To run the project
 
 1. **Clone the repo**
 
@@ -25,7 +25,7 @@ npm run dev
 
 Additional information:
 
-## How to Test
+### How to Test
 
 - Add a post: Click “Add post” and fill out the form.
 - Edit a post: Click the pencil icon on a post.
@@ -33,13 +33,13 @@ Additional information:
 - Type to search posts (debounced).
 - Click the clear icon to reset the search.
 
-## Tech Stack
+### Tech Stack
 
 - Vue 3
 - TypeScript
 - Tailwind CSS
 
-## Features Implemented
+### Features Implemented
 
 - Infinite scroll
 - Responsive design using Tailwind CSS
@@ -48,7 +48,7 @@ Additional information:
 - Debounced search functionality
 - Displays tags, views, and reactions
 
-## Notes
+### Notes
 
 Future implementation would include:
 
