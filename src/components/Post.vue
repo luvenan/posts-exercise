@@ -31,15 +31,15 @@
 
 <template>
   <div v-if="!isEditing" :class="postClasses">
-    <div class="flex justify-between items-center">
+    <div class="flex justify-between items-start">
       <div class="font-bold">{{ editableTitle }}</div>
-      <div @click="isEditing = true" class="shrink-0"><img src="../assets/edit.svg" class="cursor-pointer"/></div>
+      <img src="../assets/edit.svg" @click="isEditing=true" class="shrink-0 cursor-pointer mt-1.5 ml-2"/>
     </div>
-    <div>{{ editableBody }}</div>
+    <div class="text-[#83888F] text-sm line-clamp-3">{{ editableBody }}</div>
   </div>
   <div v-else :class="postClasses">
-    <input v-model="editableTitle" class="border border-gray-400 rounded-md px-2 font-bold" type="text" />
-    <textarea v-model="editableBody" rows="4" class="border  border-gray-400 rounded-md px-2 "></textarea>
+    <input v-model="editableTitle" class="border border-gray-400 rounded-md px-2 font-bold text-gray-800" type="text" />
+    <textarea v-model="editableBody" rows="3" class="border  border-gray-400 text-gray-700 rounded-md px-2 text-sm"></textarea>
     <div  class="flex justify-end">
       <img @click="isEditing=false" src="../assets/clear.svg" class="cursor-pointer" />
       <img @click="updatePost(post.id)" src="../assets/check.svg" class="cursor-pointer" />

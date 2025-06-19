@@ -30,8 +30,8 @@
 <template>
   <form @submit.prevent="handleSubmit">
   <div class="bg-white border border-[#E3E8EB] rounded-2xl px-4 py-2 w-[400px] shadow-[0px_1px_9px_2px_rgba(193,194,198,0.15)] text-left flex flex-col gap-2">
-    <input v-model="title" type="text" placeholder="Post title" class="w-full border border-gray-400 rounded-md px-2" />
-    <textarea rows="4" v-model="body" placeholder="Post content" class="w-full border border-gray-400 rounded-md px-2"></textarea>
+    <input v-model="title" type="text" placeholder="Post title" class="w-full border border-gray-400 rounded-md px-2 font-bold text-gray-800 " />
+    <textarea rows="3" v-model="body" placeholder="Post content" class="w-full border border-gray-400 rounded-md px-2 text-sm text-gray-700 "></textarea>
     <div class="flex justify-end">
       <img @click="emit('close')" src="../assets/clear.svg" class="cursor-pointer" />
       <img @click="handleSubmit" src="../assets/check.svg" class="cursor-pointer" />

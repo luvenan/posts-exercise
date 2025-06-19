@@ -70,7 +70,7 @@
     <div class="font-bold text-xl">Posts</div>
     <div @click="showAddPost=true" class="text-[#3679FF] text-sm cursor-pointer">Add post</div>
   </div>
-  <div class="flex flex-col gap-2" >
+  <div class="flex flex-col gap-3" >
     <AddPost @newpost="showNewPost" @close="showAddPost=false" v-if="showAddPost" />
     <Post
       v-for="post in posts"
