@@ -2,6 +2,7 @@
 import Post from "./Post.vue";
 import { ref, onMounted, onUnmounted } from "vue";
 import AddPost from "./AddPost.vue";
+import { watch } from "vue";
 
 type Post = {
   id: number;
@@ -16,7 +17,7 @@ type Post = {
 };
 
 // If more time:
-// - Add loading spinner for fetching posts
+// - Add loading spinner for fetching / searching posts
 // - Add erorr handling for API requests
 
 const posts = ref<Post[]>([]);
@@ -94,6 +95,15 @@ const triggerSearch = async () => {
   }
 };
 
+let debounceTimeout: ReturnType<typeof setTimeout> | null = null;
+
+watch(searchQuery, () => {
+  if (debounceTimeout) clearTimeout(debounceTimeout);
+  debounceTimeout = setTimeout(() => {
+    triggerSearch();
+  }, 300);
+});
+
 const showNewPost = (payload: { title: string; body: string }) => {
   posts.value.unshift({
     id: Math.floor(Math.random() * 10000),
@@ -115,17 +125,25 @@ const showNewPost = (payload: { title: string; body: string }) => {
         <div @click="showAddPost = true" class="text-[#3679FF] text-sm cursor-pointer">Add post</div>
       </div>
       <div
-        @keyup.enter="triggerSearch"
-        @blur="triggerSearch"
         class="mt-4 mb-4 w-full border border-gray-400 rounded-xl px-2 py-1 text-gray-800 flex focus-within:border-orange-400 focus-within:ring-1 focus-within:ring-orange-300"
       >
         <img src="../assets/search.svg" class="mr-1.5" />
         <input v-model="searchQuery" type="text" class="w-full focus:outline-none" />
-        <img @click="searchQuery = ''" class="cursor-pointer ml-1.5" src="../assets/clear.svg" />
+        <img
+          @click="
+            searchQuery = '';
+            triggerSearch();
+          "
+          class="cursor-pointer ml-1.5"
+          src="../assets/clear.svg"
+        />
       </div>
       <div class="flex flex-col gap-3">
         <AddPost @newpost="showNewPost" @close="showAddPost = false" v-if="showAddPost" />
         <Post v-for="post in posts" :key="post.id" :post="post" />
+        <div v-if="!loading && isSearching && posts.length === 0" class="text-center text-gray-500 mt-4">
+          No results found
+        </div>
       </div>
     </div>
   </div>
