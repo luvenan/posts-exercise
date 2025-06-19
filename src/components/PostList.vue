@@ -16,7 +16,7 @@ type Post = {
 };
 
 // If more time:
-// - Add loading state for fetching posts
+// - Add loading spinner for fetching posts
 // - Add erorr handling for API requests
 
 const posts = ref<Post[]>([]);
@@ -24,17 +24,28 @@ const showAddPost = ref(false);
 const page = ref(0);
 const loading = ref(false);
 const allLoaded = ref(false);
+const searchQuery = ref("");
+const isSearching = ref(false);
 
-const getPosts = async (limit: number = 20, skip: number = 0) => {
-  const res = await fetch(`https://dummyjson.com/posts?limit=${limit}&skip=${skip}`);
+const getPosts = async (limit = 20, skip = 0, search = "") => {
+  let url = `https://dummyjson.com/posts`;
+  if (search.trim()) {
+    url += `/search?q=${encodeURIComponent(search.trim())}`;
+    console.log("Searching for:", search.trim(), url);
+  } else {
+    url += `?limit=${limit}&skip=${skip}`;
+  }
+  const res = await fetch(url);
   const data = await res.json();
   return data.posts;
 };
 
 const loadMorePosts = async () => {
-  const limit = 5;
   if (loading.value || allLoaded.value) return;
+  if (searchQuery.value.trim()) return;
+
   loading.value = true;
+  const limit = 5;
   const newPosts = await getPosts(limit, page.value * limit);
   if (!newPosts.length) {
     allLoaded.value = true;
@@ -44,7 +55,6 @@ const loadMorePosts = async () => {
   }
   loading.value = false;
 };
-
 onMounted(async () => {
   await loadMorePosts();
   window.addEventListener("scroll", handleScroll);
@@ -63,9 +73,30 @@ const handleScroll = () => {
   }
 };
 
+const triggerSearch = async () => {
+  const query = searchQuery.value.trim();
+  isSearching.value = query.length > 0;
+
+  posts.value = [];
+  page.value = 0;
+  allLoaded.value = false;
+
+  if (!isSearching.value) {
+    await loadMorePosts();
+  } else {
+    loading.value = true;
+    const searchedPosts = await getPosts(20, 0, query);
+    posts.value = searchedPosts;
+    loading.value = false;
+    if (searchedPosts.length < 20) {
+      allLoaded.value = true;
+    }
+  }
+};
+
 const showNewPost = (payload: { title: string; body: string }) => {
   posts.value.unshift({
-    id: Math.floor(Math.random() * 10000), // Simulating an ID for the new post
+    id: Math.floor(Math.random() * 10000),
     title: payload.title,
     body: payload.body,
     reactions: { likes: 0, dislikes: 0 },
@@ -82,6 +113,15 @@ const showNewPost = (payload: { title: string; body: string }) => {
       <div class="w-full flex justify-between mb-2 items-baseline">
         <div class="font-bold text-xl">Posts</div>
         <div @click="showAddPost = true" class="text-[#3679FF] text-sm cursor-pointer">Add post</div>
+      </div>
+      <div
+        @keyup.enter="triggerSearch"
+        @blur="triggerSearch"
+        class="mt-4 mb-4 w-full border border-gray-400 rounded-xl px-2 py-1 text-gray-800 flex focus-within:border-orange-400 focus-within:ring-1 focus-within:ring-orange-300"
+      >
+        <img src="../assets/search.svg" class="mr-1.5" />
+        <input v-model="searchQuery" type="text" class="w-full focus:outline-none" />
+        <img @click="searchQuery = ''" class="cursor-pointer ml-1.5" src="../assets/clear.svg" />
       </div>
       <div class="flex flex-col gap-3">
         <AddPost @newpost="showNewPost" @close="showAddPost = false" v-if="showAddPost" />
