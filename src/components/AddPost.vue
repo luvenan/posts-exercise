@@ -7,6 +7,7 @@
   // Emit event to parent (optional)
   const emit = defineEmits<{
     (e: 'newpost', payload: { title: string; body: string }): void
+    (e: 'close', payload: void): void
   }>()
 
   const handleSubmit = () => {
@@ -27,18 +28,14 @@
 </script>
 
 <template>
-  <div>
-    <h2>Add Post</h2>
-    <form @submit.prevent="handleSubmit">
-      <div>
-        <label>Title:</label>
-        <input v-model="title" type="text" placeholder="Post title" />
-      </div>
-      <div>
-        <label>Body:</label>
-        <textarea v-model="body" placeholder="Post content"></textarea>
-      </div>
-      <button type="submit">Add Post</button>
-    </form>
+  <form @submit.prevent="handleSubmit">
+  <div class="bg-white border border-[#E3E8EB] rounded-2xl px-4 py-2 w-[400px] shadow-[0px_1px_9px_2px_rgba(193,194,198,0.15)] text-left flex flex-col gap-2">
+    <input v-model="title" type="text" placeholder="Post title" class="w-full border border-gray-400 rounded-md px-2" />
+    <textarea rows="4" v-model="body" placeholder="Post content" class="w-full border border-gray-400 rounded-md px-2"></textarea>
+    <div class="flex justify-end">
+      <img @click="emit('close')" src="../assets/clear.svg" class="cursor-pointer" />
+      <img @click="handleSubmit" src="../assets/check.svg" class="cursor-pointer" />
+    </div>
   </div>
+   </form>
 </template>
