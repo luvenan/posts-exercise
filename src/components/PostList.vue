@@ -20,8 +20,7 @@
       `https://dummyjson.com/posts?limit=${limit}&skip=${skip}`
     );
     const data = await res.json();
-    posts.value = data.posts;
-    return posts.value;
+    return data.posts;
   };
 
   const loadMorePosts = async () => {
@@ -35,12 +34,11 @@
       posts.value.push(...newPosts);
       page.value++;
     }
-
     loading.value = false;
   };
 
   onMounted(async () => {
-    await getPosts();
+    await loadMorePosts();
     window.addEventListener("scroll", handleScroll);
   });
 
@@ -57,7 +55,7 @@
     }
   };
 
-  const showNewPost = (payload: {title: string, body: string}) => {
+  const showNewPost = (payload: { title: string; body: string }) => {
     posts.value.unshift({
       id: Math.floor(Math.random() * 10000), // Simulating an ID for the new post
       title: payload.title,
