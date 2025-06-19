@@ -4,6 +4,11 @@ import { ref } from "vue";
 const title = ref("");
 const body = ref("");
 
+// If more time:
+// - Add form validation for title and body
+// - Add loading state while submitting
+// - Handle errors from the API
+
 // Emit event to parent (optional)
 const emit = defineEmits<{
   (e: "newpost", payload: { title: string; body: string }): void;
@@ -19,6 +24,9 @@ const handleSubmit = () => {
       title: title.value,
       body: body.value,
       userId: 1, // Assuming a static userId for simplicity
+      reactions: { likes: 0, dislikes: 0 },
+      views: 0,
+      tags: [],
     }),
   });
   emit("newpost", { title: title.value, body: body.value });

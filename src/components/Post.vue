@@ -1,10 +1,23 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
+// If more time:
+// - Add form validation for title and body
+// - Consolidate the editing section with the addPost component
+// - Add loading state while submitting
+// - Handle errors from the API
+// - Allow user to like or dislike posts
+
 type Post = {
   id: number;
   title: string;
   body: string;
+  views: number;
+  tags: string[];
+  reactions: {
+    likes: number;
+    dislikes: number;
+  };
 };
 
 const props = defineProps<{
@@ -37,6 +50,20 @@ const isEditing = ref(false);
       <img src="../assets/edit.svg" @click="isEditing = true" class="shrink-0 cursor-pointer mt-1.5 ml-2" />
     </div>
     <div class="text-[#83888F] text-sm line-clamp-3">{{ editableBody }}</div>
+    <div class="flex justify-between">
+      <div class="flex">
+        <img src="../assets/thumb_up.svg" />
+        <span class="text-[#83888F] text-xs ml-1">{{ post.reactions.likes }}</span>
+      </div>
+      <div class="flex">
+        <img src="../assets/thumb_down.svg" />
+        <span class="text-[#83888F] text-xs ml-1">{{ post.reactions.dislikes }}</span>
+      </div>
+      <div class="flex">
+        <img src="../assets/views.svg" />
+        <span class="text-[#83888F] text-xs ml-1">{{ post.views }}</span>
+      </div>
+    </div>
   </div>
   <div v-else :class="postClasses">
     <input v-model="editableTitle" class="border border-gray-400 rounded-md px-2 font-bold text-gray-800" type="text" />

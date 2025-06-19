@@ -7,7 +7,17 @@ type Post = {
   id: number;
   title: string;
   body: string;
+  views: number;
+  tags: string[];
+  reactions: {
+    likes: number;
+    dislikes: number;
+  };
 };
+
+// If more time:
+// - Add loading state for fetching posts
+// - Add erorr handling for API requests
 
 const posts = ref<Post[]>([]);
 const showAddPost = ref(false);
@@ -58,6 +68,9 @@ const showNewPost = (payload: { title: string; body: string }) => {
     id: Math.floor(Math.random() * 10000), // Simulating an ID for the new post
     title: payload.title,
     body: payload.body,
+    reactions: { likes: 0, dislikes: 0 },
+    views: 0,
+    tags: [],
   });
   showAddPost.value = false;
 };
